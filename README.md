@@ -15,3 +15,4 @@
 - 학습목표: “선언적 프로그래밍이란 무엇인가?” “리액트의 선언적 프로그래밍이 어떻게 인지 부하를 낮추는가?” 이해
 - 액션아이템: 바닐라 JS로 만든 TODO리스트를 `createElement` 와 `render`함수로 마이그레이션하기
 - 참고자료: 
+    - [createElement(), _jsx()](https://github.com/facebook/react/blob/65eec428c40d542d4d5a9c1af5c3f406aecf3440/packages/react/src/jsx/ReactJSXElement.js)
