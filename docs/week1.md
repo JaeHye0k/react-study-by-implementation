@@ -1,6 +1,18 @@
 ## createElment
 
 - 역할: `ReactElement`를 생성하고 반환
+- 사용 예시:
+
+    ```js
+    // createElement(type, config, children)
+    createElement("div", {
+        className: "parent",
+        children: createElement("div", {
+            className: "child",
+        }),
+    });
+    ```
+
 - 구현체: [createElement](https://github.com/facebook/react/blob/65eec428c40d542d4d5a9c1af5c3f406aecf3440/packages/react/src/jsx/ReactJSXElement.js#L610-L746)
 - 분석
     ```js

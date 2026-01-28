@@ -1,7 +1,10 @@
-const $input = document.querySelector('.todo-input');
-const $todoArea = document.querySelector('.todo-area');
-const $submitBtn = document.querySelector('.submit-btn');
-$submitBtn.addEventListener('click', handleSubmit);
+import ReactDOM from "./react/src/ReactDOM.js";
+import React from "./react/src/ReactJSXElement.js";
+
+const $input = document.querySelector(".todo-input");
+const $todoArea = document.querySelector(".todo-area");
+const $submitBtn = document.querySelector(".submit-btn");
+$submitBtn.addEventListener("click", handleSubmit);
 
 let todoId = 0;
 
@@ -37,3 +40,6 @@ function createTodoItem(value) {
 function deleteTodoItem(e) {
     console.log(e);
 }   
+
+const reactElement = React.createElement("div", { className: "root" }, "Hello, World!");
+ReactDOM.render(reactElement);

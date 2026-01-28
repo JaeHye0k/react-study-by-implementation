@@ -1,0 +1,23 @@
+{
+    "name": "react-study-by-implementation",
+    "version": "1.0.0",
+    "description": "- 내부 동작원리를 이해해 성능 최적화나 복잡한 버그 발생 시 논리적인 근거를 마련하기 위함",
+    "homepage": "https://github.com/JaeHye0k/react-study-by-implementation#readme",
+    "bugs": {
+        "url": "https://github.com/JaeHye0k/react-study-by-implementation/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/JaeHye0k/react-study-by-implementation.git"
+    },
+    "license": "ISC",
+    "author": "",
+    "type": "module",
+    "main": "index.js",
+    "directories": {
+        "doc": "docs"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    }
+}
