@@ -1,45 +1,5 @@
-import ReactDOM from "./react/src/ReactDOM.js";
-import React from "./react/src/ReactJSXElement.js";
+import React from "./react/src/index.js";
+import App from "./App.js";
 
-const $input = document.querySelector(".todo-input");
-const $todoArea = document.querySelector(".todo-area");
-const $submitBtn = document.querySelector(".submit-btn");
-$submitBtn.addEventListener("click", handleSubmit);
-
-let todoId = 0;
-
-
-
-function handleSubmit() {
-    $todoArea.appendChild(createTodoItem($input.value));
-    $input.value = '';
-}
-
-function handleDelete() {
-
-}
-
-function createTodoItem(value) {
-    const $todoItem = document.createElement('li');
-    $todoItem.classList.add('todo-item');
-    $todoItem.id = `todo-${todoId++}`;
-    $todoItem.innerHTML = `
-        <input type="checkbox">
-        <span>${value}</span>
-        <button type="button" class="delete-btn">❌</button>
-    `;
-
-    const $deleteBtn = $todoItem.querySelector('.delete-btn');
-    $deleteBtn.addEventListener('click', () => {
-        $todoItem.remove();
-    });
-
-    return $todoItem;
-}
-
-function deleteTodoItem(e) {
-    console.log(e);
-}   
-
-const reactElement = React.createElement("div", { className: "root" }, "Hello, World!");
-ReactDOM.render(reactElement);
+const root = React.createRoot(document.getElementById("root"));
+root.render(App());
