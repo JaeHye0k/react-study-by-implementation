@@ -46,6 +46,7 @@
     - 리액트는 왜 TypeScript 대신 Flow를 사용할까?
     - 리액트에서는 왜 html attribute 이름을 그대로 안쓸까?
       예: class -> className
+        - JSX는 JS로 트랜스파일링 되기 떄문에 `class`와 같은 속성명을 그대로 사용하면 JS 예약어 때문에 에러가 발생할 수 있음
 
 ### ReactElement
 
