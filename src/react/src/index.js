@@ -5,12 +5,17 @@ class ReactElement {
      * @param {{ [key: string]: any }} props
      * @param  {...any} children
      */
-    constructor(type, props = {}, ...children) {
+    constructor(type, props, ...children) {
+        props = props || {};
         this.realDOM = document.createElement(type);
 
-        Object.entries(props).forEach(([key, value]) => {
-            this.realDOM.setAttribute(key, value);
-        });
+        for (const [k, v] of Object.entries(props)) {
+            if (k.startsWith("on") && typeof v === "function") {
+                this.realDOM.addEventListener(k.slice(2), v);
+            } else {
+                this.realDOM.setAttribute(k, v);
+            }
+        }
 
         children.forEach((child) => {
             console.log(child);

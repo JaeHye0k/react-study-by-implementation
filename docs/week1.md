@@ -75,3 +75,9 @@
       -> 현재 요소에 children 요소를 appendChild 한다.
       -> 결국에 children 요소와 현재 요소 모두 실제 DOM 요소로 변환되어야 한다.
       -> ReactElement가 자기 자신에 대응하는 실제 DOM 요소를 반환할 수 있어야 한다.
+- [x] 기존 HTML Todo List를 React.createElement로 마이그레이션
+    - 배운점: `<input type="text" />`의 `change` 이벤트는 매 타이핑마다 발생하지 않고, `focus`를 잃었을 때 발생한다. 따라서 실제로 `<input>` 요소의 타이핑 시점에 이벤트를 처리하려면 `change` 이벤트 대신 `input` 이벤트를 수신해야한다.
+- [ ] 상태 변화에 따른 리렌더링 구현
+- [ ] Virtual DOM 구현
+    - 문제점: `createElement`마다 매번 실제 DOM을 조작함. 실제 DOM을 조작할 때마다 리페인트, 리플로우가 발생하는데, 해당 과정은 비용이 많이 드는 과정임. (성능 저하)
+    - 해결책: 가상 DOM을 구현하여 브라우저 화면에 실제로 DOM을 반영하는건 한번만
