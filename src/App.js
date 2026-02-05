@@ -8,6 +8,7 @@ let todoId = 0;
  */
 function App() {
     let value = "";
+    let todoItems = [{ id: todoId++, value: "할일 1" }];
 
     /**
      *
@@ -18,30 +19,9 @@ function App() {
         console.log(value);
     };
 
-    const handleSubmit = () => {
+    const createTodoItem = () => {
         if (value.trim() === "") return;
-        createTodoItem(value);
-        value = "";
-        document.querySelector(".todo-input").value = "";
-    };
-
-    const createTodoItem = (value) => {
-        const $todoArea = document.querySelector(".todo-area");
-        const $todoItem = document.createElement("li");
-        $todoItem.classList.add("todo-item");
-        $todoItem.id = `todo-${todoId++}`;
-        $todoItem.innerHTML = `
-        <input type="checkbox">
-        <span>${value}</span>
-        <button type="button" class="delete-btn">❌</button>
-    `;
-
-        const $deleteBtn = $todoItem.querySelector(".delete-btn");
-        $deleteBtn.addEventListener("click", () => {
-            $todoItem.remove();
-        });
-
-        $todoArea.appendChild($todoItem);
+        todoItems.push({ id: todoId++, value });
     };
 
     return React.createElement(
@@ -52,14 +32,37 @@ function App() {
             type: "text",
             placeholder: "할 일을 입력하세요.",
             class: "todo-input",
+            value: value,
             oninput: handleInput,
         }),
         React.createElement(
             "button",
-            { type: "button", class: "submit-btn", onclick: handleSubmit },
+            { type: "button", class: "submit-btn", onclick: createTodoItem },
             "작성",
         ),
-        React.createElement("ul", { class: "todo-area" }),
+        React.createElement(
+            "ul",
+            { class: "todo-area" },
+            ...todoItems.map((item) => {
+                return React.createElement(
+                    "li",
+                    { class: "todo-item", id: `todo-${item.id}` },
+                    React.createElement("input", { type: "checkbox" }),
+                    React.createElement("span", null, item.value),
+                    React.createElement(
+                        "button",
+                        {
+                            type: "button",
+                            class: "delete-btn",
+                            onclick: (e) => {
+                                todoItems = todoItems.filter((newItem) => newItem.id !== item.id);
+                            },
+                        },
+                        "❌",
+                    ),
+                );
+            }),
+        ),
     );
 }
 
