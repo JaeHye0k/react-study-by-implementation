@@ -1,3 +1,24 @@
+import { root } from "../../index.js";
+
+const stateList = [];
+const setStateList = [];
+let cursor = 0;
+
+function useState(initialState) {
+    if (!stateList[cursor]) stateList.push(initialState);
+    if (!setStateList[cursor])
+        setStateList.push((newState) => {
+            stateList[cursor] = newState;
+            root.render();
+        });
+
+    const state = stateList[cursor];
+    const setState = setStateList[cursor];
+    cursor++;
+
+    return [state, setState];
+}
+
 class ReactElement {
     /**
      *
@@ -43,11 +64,13 @@ class ReactRootElement {
 
     /**
      *
-     * @param {ReactElement} el
+     * @param {() => ReactElement} el
      */
     render(el) {
-        // 실제 DOM에 렌더링
-        this.root.appendChild(el.realDOM);
+        cursor = 0; // 렌더링이 시작될 때 cursor 초기화
+        this.root.innerHTML = "";
+        this.child = el();
+        this.root.appendChild(this.child.realDOM);
     }
 }
 
@@ -71,7 +94,4 @@ function createRoot(el) {
     return new ReactRootElement(el);
 }
 
-export default {
-    createElement,
-    createRoot,
-};
+export { createElement, createRoot, useState };

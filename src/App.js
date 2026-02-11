@@ -1,4 +1,4 @@
-import React from "./react/src/index.js";
+import { createElement, useState } from "./react/src/index.js";
 
 let todoId = 0;
 
@@ -7,55 +7,57 @@ let todoId = 0;
  * @returns {ReactElement}
  */
 function App() {
-    let value = "";
-    let todoItems = [{ id: todoId++, value: "할일 1" }];
+    let [value, setValue] = useState("");
+    let [todoItems, setTodoItems] = useState([]);
 
     /**
      *
      * @param {InputEvent} e
      */
     const handleInput = (e) => {
-        value = e.currentTarget.value;
+        setValue(e.currentTarget.value);
         console.log(value);
     };
 
     const createTodoItem = () => {
+        console.log("Creating todo item with value:", value);
         if (value.trim() === "") return;
-        todoItems.push({ id: todoId++, value });
+        setTodoItems([...todoItems, { id: todoId++, value }]);
+        setValue("");
     };
 
-    return React.createElement(
+    return createElement(
         "div",
         { class: "todo-wrapper" },
-        React.createElement("h1", null, "Todo List"),
-        React.createElement("input", {
+        createElement("h1", null, "Todo List"),
+        createElement("input", {
             type: "text",
             placeholder: "할 일을 입력하세요.",
             class: "todo-input",
             value: value,
             oninput: handleInput,
         }),
-        React.createElement(
+        createElement(
             "button",
             { type: "button", class: "submit-btn", onclick: createTodoItem },
             "작성",
         ),
-        React.createElement(
+        createElement(
             "ul",
             { class: "todo-area" },
             ...todoItems.map((item) => {
-                return React.createElement(
+                return createElement(
                     "li",
                     { class: "todo-item", id: `todo-${item.id}` },
-                    React.createElement("input", { type: "checkbox" }),
-                    React.createElement("span", null, item.value),
-                    React.createElement(
+                    createElement("input", { type: "checkbox" }),
+                    createElement("span", null, item.value),
+                    createElement(
                         "button",
                         {
                             type: "button",
                             class: "delete-btn",
                             onclick: (e) => {
-                                todoItems = todoItems.filter((newItem) => newItem.id !== item.id);
+                                setTodoItems(todoItems.filter((newItem) => newItem.id !== item.id));
                             },
                         },
                         "❌",
