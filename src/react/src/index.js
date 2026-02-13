@@ -1,19 +1,20 @@
-import { root } from "../../index.js";
-
 const stateList = [];
 const setStateList = [];
 let cursor = 0;
+let _root = null;
 
 function useState(initialState) {
-    if (!stateList[cursor]) stateList.push(initialState);
-    if (!setStateList[cursor])
+    const frozenCursor = cursor;
+    
+    if (stateList.length === cursor) stateList.push(initialState);
+    if (setStateList.length === cursor)
         setStateList.push((newState) => {
-            stateList[cursor] = newState;
-            root.render();
+            stateList[frozenCursor] = newState;
+            _root.render();
         });
 
-    const state = stateList[cursor];
-    const setState = setStateList[cursor];
+    const state = stateList[frozenCursor];
+    const setState = setStateList[frozenCursor];
     cursor++;
 
     return [state, setState];
@@ -60,16 +61,19 @@ class ReactRootElement {
      */
     constructor(root) {
         this.root = root;
+        this.component = null;
+        this.child = null;
     }
 
     /**
      *
      * @param {() => ReactElement} el
      */
-    render(el) {
+    render(component) {
+        if(component) this.component = component;
         cursor = 0; // 렌더링이 시작될 때 cursor 초기화
         this.root.innerHTML = "";
-        this.child = el();
+        this.child = this.component();
         this.root.appendChild(this.child.realDOM);
     }
 }
@@ -90,8 +94,9 @@ function createElement(type, props, ...children) {
  * @param {HTMLElement} el
  * @returns {ReactRootElement}
  */
-function createRoot(el) {
-    return new ReactRootElement(el);
+function createRoot(root) {
+    _root = new ReactRootElement(root);
+    return _root;
 }
 
 export { createElement, createRoot, useState };
