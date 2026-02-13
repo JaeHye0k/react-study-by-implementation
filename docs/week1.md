@@ -75,7 +75,14 @@
     - 일단 div 엘리먼트만 고려해서 PoC
     - PoC성공 했으면 어떻게 범용적으로 만들것인지 고민
 - [x] `ReactElement` 를 실제로 DOM에 렌더링하는 `render` 함수 구현
-    - querySelector 는 `ReactElement`가 아니라 `HTMLElement`를 반환하기 때문에 `render` 함수가 없음. 따라서 root 엘리먼트를 리액트 엘리먼트로 변환시켜줄 함수가 필요함. → 그래서 `querySlector()` 대신 `ReactDOM.createRoot()` 를 사용하는 거구나.
+    - `ReactElement`는 실제 DOM 엘리먼트가 아니기 때문에 실제 DOM에 렌더링을 위해선 DOM과 `ReactElement`간의 인터페이스(연결부)가 필요하다. 이 인터페이스 역할을 해주는게 `ReactRootElement`이다. 그래서 리액트 코드 진입점을 보면 다음과 같이 실제 DOM 객체를 `ReactRootElement`로 래핑하는 코드를 볼 수 있다.
+        ```jsx
+        const root = ReactDOM.createRoot(  
+            document.getElementById('root')
+        );
+        const element = <h1>Hello, world</h1>;  
+        root.render(element);  
+        ```
 - [x] createElement의 children에 ReactElement가 중첩되어있는 경우 처리
     - 재귀 -> 어떻게 children을 재귀적으로 렌더링할까?
       -> 현재 요소에 children 요소를 appendChild 한다.
