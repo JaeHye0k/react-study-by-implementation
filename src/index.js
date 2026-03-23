@@ -1,7 +1,6 @@
-import { createRoot } from "./react/src/index.js";
-import App from "./App.js";
+import TodoList from "./TodoList.js";
 
-const root = createRoot(document.getElementById("root"));
-root.render(App);
+const root = document.querySelector('body');
+root.appendChild(TodoList());
 
 export { root };
